@@ -1,0 +1,69 @@
+{
+  "schemaVersion": 1,
+  "id": "mcpvot.attest",
+  "name": "zkagent attestations",
+  "version": "0.2.0",
+  "author": "MCPVOT",
+  "license": "MIT",
+  "description": "The last zkagent verification verdict in the Omarchy bar: green when the newest receipt was accepted, red with the reason code when it was not, grey when the verdict is stale.",
+  "kinds": [
+    "bar-widget"
+  ],
+  "activation": "on-demand",
+  "entryPoints": {
+    "barWidget": "BarWidget.qml"
+  },
+  "barWidget": {
+    "displayName": "Attestations",
+    "description": "Reads the verdict document written by `zkagent verify --json` and shows it. Click to re-verify the last bundle.",
+    "category": "AI",
+    "aliases": [
+      "attest",
+      "zkagent"
+    ],
+    "allowMultiple": false,
+    "defaults": {
+      "statusFile": "~/.local/state/zkagent/last-verdict.json",
+      "refreshIntervalSec": 60,
+      "staleAfterSec": 900,
+      "command": ""
+    },
+    "schema": [
+      {
+        "key": "statusFile",
+        "type": "path",
+        "label": "Verdict file",
+        "defaultValue": "~/.local/state/zkagent/last-verdict.json",
+        "description": "JSON written by `zkagent verify --json`. Absent file means no verdict yet, not a failure."
+      },
+      {
+        "key": "refreshIntervalSec",
+        "type": "integer",
+        "label": "Refresh interval (seconds)",
+        "min": 5,
+        "max": 3600,
+        "step": 5,
+        "defaultValue": 60
+      },
+      {
+        "key": "staleAfterSec",
+        "type": "integer",
+        "label": "Treat the verdict as stale after (seconds)",
+        "min": 60,
+        "max": 86400,
+        "step": 60,
+        "defaultValue": 900,
+        "description": "An old verdict shows as a grey circle, not a green check: a stale green check is the failure mode this widget exists to avoid."
+      },
+      {
+        "key": "command",
+        "type": "string",
+        "label": "Verification command",
+        "defaultValue": "",
+        "description": "Optional. Run on click; it should rewrite the verdict file, e.g. `zkagent verify-bundle --manifest attestation.json --blocks blocks/ --now $(date +%s) --json > ~/.local/state/zkagent/last-verdict.json`."
+      }
+    ]
+  },
+  "homepage": "https://github.com/MCPVOT/omarchy-zkagent",
+  "repository": "https://github.com/MCPVOT/omarchy-zkagent"
+}
