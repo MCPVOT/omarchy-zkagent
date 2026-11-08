@@ -46,10 +46,10 @@ BarWidget {
     : verdict === "error" ? "?"
     : ""
 
-  // The mark is the shield-with-padlock from the same Nerd Font the bar already uses, so it sits
-  // beside the agents icon at the same weight instead of reading as text. Never a check mark:
-  // "!" for rejected and "?" for could-not-verify keep the state readable in greyscale.
-  readonly property string glyph: "\uF099D" + suffix
+  // Letters, not a pictogram. A shield-with-padlock glyph was tried here and at bar size it
+  // collapsed into a bird-shaped smudge; "ZK" is unambiguous next to the other bar icons and matches
+  // the app icon exactly. "!" and "?" keep the state readable in greyscale.
+  readonly property string glyph: "ZK" + suffix
 
   function apply(text) {
     if (!text || text.trim() === "") {
