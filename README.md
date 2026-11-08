@@ -3,10 +3,14 @@
 An Omarchy bar widget for `zkagent`: the last attestation verdict, on your desktop.
 
 ```
-green  accepted        the newest receipt verified, and it is recent
-red    rejected        with the reason code, e.g. public_input_mismatch
-grey   stale or none   older than 15 minutes, or no verdict yet
+ZK      cyan, accepted      the newest receipt verified, and it is recent
+ZK!     red, rejected       with the reason code in the tooltip, e.g. public_input_mismatch
+ZK?     amber, unverifiable could not verify: the artifact or the keys are wrong, not the claim
+ZK      grey, stale or none older than 15 minutes, or no verdict yet
 ```
+
+The state is never a check mark. The mark is the project's "ZK", coloured, with `!` for rejected and
+`?` for could-not-verify, so it reads the same in greyscale.
 
 The grey state is the point. A green check that is a week old is worse than no check, so age
 is a first-class state rather than a detail: after `staleAfterSec` (default 900) the widget

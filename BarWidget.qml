@@ -29,7 +29,9 @@ BarWidget {
   readonly property bool isStale: checkedAt > 0
     && (Date.now() / 1000 - checkedAt) > Math.max(60, staleAfterSec)
 
-  readonly property color okColor: "#82fb9c"
+  // The project mark's cyan, not a green tick: the widget shows the logo, and the state is carried
+  // by its colour plus a one-character suffix, so a rejection is still readable without colour.
+  readonly property color okColor: "#22d3ee"
   readonly property color badColor: "#ff6b6b"
   readonly property color warnColor: "#ffb454"
   readonly property color idleColor: "#9aa0a6"
@@ -39,11 +41,14 @@ BarWidget {
     : verdict === "error" ? warnColor
     : idleColor
 
-  readonly property string glyph: isStale ? "◌"
-    : verdict === "accept" ? "✓"
-    : verdict === "reject" ? "✕"
-    : verdict === "error" ? "!"
-    : "◌"
+  readonly property string suffix: isStale ? ""
+    : verdict === "reject" ? "!"
+    : verdict === "error" ? "?"
+    : ""
+
+  // The mark itself, never a check: "ZK" in the state colour, with "!" for rejected and "?" for
+  // could-not-verify so the state survives a colourblind reading and a greyscale screenshot.
+  readonly property string glyph: "ZK" + suffix
 
   function apply(text) {
     if (!text || text.trim() === "") {
