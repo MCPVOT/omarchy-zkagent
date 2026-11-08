@@ -71,3 +71,20 @@ omarchy bar set mcpvot.attest staleAfterSec 300
 MIT. The protocol lives in [MCPVOT/zkagent](https://github.com/MCPVOT/zkagent); the Hermes
 plugin that produces these verdicts lives in
 [MCPVOT/hermes-zkagent](https://github.com/MCPVOT/hermes-zkagent).
+
+## Does it show an avatar in the app launcher?
+
+Omarchy plugin manifests have no icon field: the discovery contract is `id`, `name`, `description`,
+`kinds`, `entryPoints` and the bar paths. A bar widget's identity is its glyph, which is why this one
+shows `ZK` rather than a picture. Nothing is missing from the manifest.
+
+If you want zkagent to appear in the application launcher with the project mark, that is a desktop
+entry, not a plugin:
+
+```bash
+install -Dm644 assets/zkagent.svg ~/.local/share/icons/hicolor/scalable/apps/zkagent.svg
+# then a .desktop with: Exec=foot -e zkagent-status   Icon=zkagent
+```
+
+`zkagent-status` prints the same verdict the widget shows, so the launcher icon is a real entry point
+rather than a shortcut to nothing.
