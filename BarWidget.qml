@@ -46,9 +46,10 @@ BarWidget {
     : verdict === "error" ? "?"
     : ""
 
-  // The mark itself, never a check: "ZK" in the state colour, with "!" for rejected and "?" for
-  // could-not-verify so the state survives a colourblind reading and a greyscale screenshot.
-  readonly property string glyph: "ZK" + suffix
+  // The mark is the shield-with-padlock from the same Nerd Font the bar already uses, so it sits
+  // beside the agents icon at the same weight instead of reading as text. Never a check mark:
+  // "!" for rejected and "?" for could-not-verify keep the state readable in greyscale.
+  readonly property string glyph: "\uF099D" + suffix
 
   function apply(text) {
     if (!text || text.trim() === "") {

@@ -2,27 +2,14 @@
   <title>zkagent</title>
   <rect width="512" height="512" rx="112" fill="#0B0F14"/>
   <rect x="8" y="8" width="496" height="496" rx="104" fill="none" stroke="#1F2937" stroke-width="4"/>
-<g fill="#22D3EE">
-        <rect x="71" y="127" width="170" height="34"/>
-    <rect x="207" y="161" width="34" height="34"/>
-    <rect x="173" y="195" width="34" height="34"/>
-    <rect x="139" y="229" width="34" height="34"/>
-    <rect x="105" y="263" width="34" height="34"/>
-    <rect x="105" y="297" width="34" height="34"/>
-    <rect x="71" y="331" width="170" height="34"/>
-        <rect x="271" y="127" width="34" height="238"/>
-    <rect x="407" y="127" width="34" height="34"/>
-    <rect x="373" y="161" width="34" height="34"/>
-    <rect x="339" y="195" width="34" height="34"/>
-    <rect x="305" y="229" width="34" height="68"/>
-    <rect x="339" y="297" width="34" height="34"/>
-    <rect x="373" y="331" width="34" height="34"/>
+  <!-- the shield: the same silhouette the bar shows, at Nerd Font weight -->
+  <path d="M256 64 L436 132 V296 C436 392 356 456 256 484 C156 456 76 392 76 296 V132 Z"
+        fill="#22D3EE"/>
+  <path d="M256 96 L404 152 V296 C404 374 340 428 256 452 Z" fill="#0EA5E9" opacity="0.55"/>
+  <!-- ZK knocked out of the shield, dark on cyan, so it survives 16 px -->
+  <g fill="#0B0F14">
+    <path d="M150 190 h120 v26 l-82 88 h82 v26 H146 v-26 l82 -88 h-78 Z"/>
+    <path d="M296 190 h30 v64 l58 -64 h36 l-62 68 64 72 h-37 l-59 -68 v68 h-30 Z"/>
   </g>
-  <!-- the attested line: a receipt edge, the only ornament -->
-<g fill="#0EA5E9" opacity="0.85">
-    <rect x="71" y="391" width="370" height="8" rx="4"/>
-  </g>
-<g fill="#0EA5E9" opacity="0.35">
-    <rect x="167" y="417" width="178" height="8" rx="4"/>
-  </g>
+  <rect x="150" y="352" width="212" height="14" rx="7" fill="#0B0F14" opacity="0.55"/>
 </svg>

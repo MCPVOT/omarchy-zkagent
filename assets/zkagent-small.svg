@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" role="img" aria-label="zkagent">
+  <title>zkagent</title>
+  <!-- Small-size variant: the shield and one keyhole, no letters. At 32 px the Z and K become
+       noise, and an icon that reads as "protected thing" beats one that reads as a smudge. -->
+  <rect width="512" height="512" rx="112" fill="#0B0F14"/>
+  <path d="M256 56 L444 128 V296 C444 396 360 462 256 490 C152 462 68 396 68 296 V128 Z" fill="#22D3EE"/>
+  <path d="M256 92 L410 150 V296 C410 378 344 434 256 458 Z" fill="#0EA5E9" opacity="0.55"/>
+  <circle cx="256" cy="238" r="54" fill="#0B0F14"/>
+  <path d="M256 276 l-26 96 h52 Z" fill="#0B0F14"/>
+</svg>

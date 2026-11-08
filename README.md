@@ -88,3 +88,10 @@ install -Dm644 assets/zkagent.svg ~/.local/share/icons/hicolor/scalable/apps/zka
 
 `zkagent-status` prints the same verdict the widget shows, so the launcher icon is a real entry point
 rather than a shortcut to nothing.
+
+## The mark
+
+A shield with a keyhole, in the project's cyan: the same silhouette here, in the bar and as the app
+icon, so the widget is recognisable next to the Omarchy agents icon instead of looking like text.
+Bar size uses the shield alone; 16 to 48 px icons use a simplified shield with a keyhole, because
+letters turn to noise below 48 px.
