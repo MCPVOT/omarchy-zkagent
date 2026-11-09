@@ -30,6 +30,15 @@ omarchy bar use mcpvot.attest left
 
 Remove with `omarchy plugin remove mcpvot.attest`.
 
+## Dependencies
+
+The widget itself needs nothing beyond the Omarchy shell: it reads one file, starts no process and
+writes nothing.
+
+The verdict in that file comes from [`zkagent`](https://github.com/MCPVOT/zkagent), a Rust CLI that is
+not bundled here and is not needed for the widget to load. With no file and no `zkagent`, the mark
+stays grey, which is the honest state: nothing has been verified.
+
 ## What it reads
 
 One file, `~/.local/state/zkagent/last-verdict.json`, containing exactly what
@@ -91,7 +100,10 @@ rather than a shortcut to nothing.
 
 ## The mark
 
-A shield with a keyhole, in the project's cyan: the same silhouette here, in the bar and as the app
-icon, so the widget is recognisable next to the Omarchy agents icon instead of looking like text.
-Bar size uses the shield alone; 16 to 48 px icons use a simplified shield with a keyhole, because
-letters turn to noise below 48 px.
+`ZK`, in the project's cyan, with `!` for rejected and `?` for could-not-verify, so the bar reads the
+same in greyscale. Letters, not a pictogram: a shield-with-keyhole glyph was tried at bar size first
+and collapsed into a smudge that read as a different icon. A two-letter mark stays a two-letter mark
+at 12 px, and it matches the app icon.
+
+The icons under `assets/` are that shield, at the sizes where its detail survives: `zkagent.svg` for
+64 px and up, `zkagent-small.svg` for 16 to 48 px, and `zkagent-mono.svg` for a single-colour panel.
