@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "id": "mcpvot.attest",
   "name": "zkagent attestations",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "author": "MCPVOT",
   "license": "MIT",
   "description": "The last zkagent verification verdict in the Omarchy bar, as the project mark: cyan when the newest receipt was accepted, red with the reason code when it was not, grey when the verdict is stale.",

@@ -24,10 +24,15 @@ BarWidget {
 
   readonly property int staleAfterSec: setting("staleAfterSec", 900)
 
+  // A cheap clock, so "is this verdict still current" keeps moving without touching the file.
+  // Before this, staleness only recomputed when the verdict file was re-read, which tied one
+  // concern (how old is the evidence) to another (has the evidence changed).
+  property double nowSec: Date.now() / 1000
+
   // A verdict older than staleAfterSec is not evidence. Showing last week's green
   // check as if it were current is the exact failure this widget must not have.
   readonly property bool isStale: checkedAt > 0
-    && (Date.now() / 1000 - checkedAt) > Math.max(60, staleAfterSec)
+    && (nowSec - checkedAt) > Math.max(60, staleAfterSec)
 
   // The project mark's cyan, not a green tick: the widget shows the logo, and the state is carried
   // by its colour plus a one-character suffix, so a rejection is still readable without colour.
@@ -53,22 +58,30 @@ BarWidget {
 
   function apply(text) {
     if (!text || text.trim() === "") {
-      verdict = "unknown"; reasonCode = ""; executionId = ""; checkedAt = 0
+      set("unknown", "", "", 0)
       return
     }
     try {
       var doc = JSON.parse(text)
-      verdict = String(doc.verdict || "unknown")
-      reasonCode = doc.reason_code ? String(doc.reason_code) : ""
-      executionId = doc.execution_id === null || doc.execution_id === undefined ? "" : String(doc.execution_id)
-      checkedAt = doc.checked_at === null || doc.checked_at === undefined ? 0 : Number(doc.checked_at)
+      set(String(doc.verdict || "unknown"),
+        doc.reason_code ? String(doc.reason_code) : "",
+        doc.execution_id === null || doc.execution_id === undefined ? "" : String(doc.execution_id),
+        doc.checked_at === null || doc.checked_at === undefined ? 0 : Number(doc.checked_at))
     } catch (e) {
       // An unparseable verdict file is not an acceptance. Say so, do not guess.
-      verdict = "error"
-      reasonCode = "unparseable"
-      executionId = ""
-      checkedAt = 0
+      set("error", "unparseable", "", 0)
     }
+  }
+
+  // Write only what changed. `reload()` fires on every watch event and on the fallback tick, and a
+  // blanket write forced the bar to re-evaluate every binding and repaint the button even when the
+  // document was byte-identical. A bar widget that repaints hourly for nothing is a cost the whole
+  // shell pays, twenty times over.
+  function set(v, reason, execId, at) {
+    if (verdict !== v) verdict = v
+    if (reasonCode !== reason) reasonCode = reason
+    if (executionId !== execId) executionId = execId
+    if (checkedAt !== at) checkedAt = at
   }
 
   FileView {
@@ -79,11 +92,21 @@ BarWidget {
     onTextChanged: root.apply(text())
   }
 
+  // The file is watched, so this is only a fallback: a writer that replaces the file by rename leaves
+  // inotify holding the old inode, and a day when the watch is unavailable should still show truth.
   Timer {
     interval: Math.max(5, root.refreshIntervalSec) * 1000
     running: true
     repeat: true
     onTriggered: verdictFile.reload()
+  }
+
+  // Staleness alone: no file IO, no repaint unless the answer actually changes.
+  Timer {
+    interval: 30000
+    running: true
+    repeat: true
+    onTriggered: root.nowSec = Date.now() / 1000
   }
 
   implicitWidth: button.implicitWidth
